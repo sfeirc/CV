@@ -38,7 +38,7 @@
 \end{center}
 
 \section*{Profile}
-IMT Atlantique engineering student specialising in performance-critical systems and quantitative software for markets and industrial infrastructure. Built five C++20 systems benchmarked against industry references or verified against labeled ground-truth: ITCH~5.0 feed handler at \textbf{97\,ns p99} (\textbf{8.2$\times$} Aquis Exchange), options engine at \textbf{302$\times$} QuantLib, an Ornstein-Uhlenbeck-driven crude-spread trading engine, and an IEC-104 ICS intrusion detector with \textbf{100\% attack recall}.
+IMT Atlantique engineering student specialising in performance-critical systems and quantitative software for markets and industrial infrastructure. Built five systems (C++20/Rust) benchmarked against industry references or labeled ground-truth: ITCH~5.0 feed handler at \textbf{97\,ns p99} (\textbf{8.2$\times$} Aquis Exchange), an IIoT predictive-maintenance pipeline (\textbf{0/10 false positives}), an Ornstein-Uhlenbeck crude-spread engine, and an IEC-104 ICS intrusion detector with \textbf{100\% attack recall}.
 
 \section*{Education}
 \entry{IMT Atlantique -- Engineering Degree in Software Engineering (Apprenticeship)}{Sep 2025 -- Jun 2028}{Nantes, France}{Algorithms \& Data Structures, OS, Computer Networks, Distributed Systems, Cloud Computing, AI}
@@ -53,10 +53,10 @@ IMT Atlantique engineering student specialising in performance-critical systems 
   \item Add \textbf{97\,ns}, cancel \textbf{13\,ns} (\textbf{8.2$\times$} Aquis Exchange); standard CI: 315/46\,ns; sustained \textbf{15.7\,M msgs/s} at p99=128\,ns over 10\,s; 0 dropped packets; zero allocations.
 \end{itemize}
 
-\projectentry{Options Pricing Engine}{C++20, AVX2, SABR, Crank-Nicolson FD}
+\projectentry{IIoT Predictive Maintenance}{Rust, tokio, EWMA/CUSUM}
 \begin{itemize}
-  \item AVX2 Black-Scholes (4-wide \texttt{\_\_m256d}), minimax normal CDF avoids \texttt{libm erf()}; Greeks in one pass; \textbf{150.9\,M prices/s} (\textbf{302$\times$} QuantLib); SABR surface (Hagan 2002 + Antonov), L-M calibration, 5$\times$9 surface in 174\,\textmu s.
-  \item American options via Crank-Nicolson FD (sinh-grid, Thomas TDMA): 110\,\textmu s/option; Sobol quasi-MC (antithetic + CV + IS); 10\,M-config validation vs QuantLib, max error \textless\,$10^{-6}$.
+  \item Async telemetry pipeline (\texttt{tokio} mpsc) fuses EWMA + CUSUM control charts across 3 sensor channels to detect developing bearing-wear signatures, with linear-trend remaining-useful-life estimation.
+  \item Sensor-fusion tuning (2-of-3 channels + widened control limits) cut false positives from a 0.41--0.50 precision baseline to \textbf{0/10 across 10 seeds}; precision \textbf{1.0000}, recall 0.9642, F1 0.9818, 43-sample latency; \textbf{1.6\,M samples/s}; 26 tests, 0 failures.
 \end{itemize}
 
 \projectentry{Crude Oil Spread Trading Engine}{C++20, stochastic processes, order book}
@@ -93,8 +93,8 @@ IMT Atlantique engineering student specialising in performance-critical systems 
 \begin{tabular}{@{}p{2.7cm}p{15.5cm}@{}}
 \textbf{Languages} & C++20, Python, Rust, TypeScript, SQL \\
 \textbf{Perf / Systems} & AF\_XDP, SIMD/AVX2, lock-free SPSC, OpenMP, cache-aware layout, \texttt{SCHED\_FIFO}, acquire/release atomics, ICS/SCADA protocol parsing (Modbus, IEC-104) \\
-\textbf{ML / Quant} & Black-Scholes/SABR, Sobol quasi-MC, Kalman filter, Ornstein-Uhlenbeck, finite-difference PDE, Johansen cointegration, LightGBM/XGB/CatBoost, FAISS \\
-\textbf{Infrastructure} & Docker, Prometheus/Grafana, GitHub Actions CI, GCP, Redis, ZeroMQ \\
+\textbf{ML / Quant} & EWMA/CUSUM change-detection, Kalman filter, Ornstein-Uhlenbeck, finite-difference PDE, Johansen cointegration, LightGBM/XGB/CatBoost, FAISS \\
+\textbf{Infrastructure} & Docker, tokio async, Prometheus/Grafana, GitHub Actions CI, GCP, Redis, ZeroMQ \\
 \textbf{Frameworks} & Flask, Node.js/Express, React/Next.js, REST/gRPC \\
 \end{tabular}
 
