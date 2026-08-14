@@ -19,8 +19,28 @@ jobs:
           chmod +x tectonic
           sudo mv tectonic /usr/local/bin/tectonic
 
+      # tectonic fetches its TeXLive package bundle from a shared CDN
+      # (relay.fullyjustified.net) on first use; that CDN occasionally
+      # 429s shared CI-runner IP ranges. Caching ~/.cache/tectonic across
+      # runs means only a cache-miss run ever touches the network, and the
+      # retry loop below covers that first run if it gets unlucky.
+      - name: Cache tectonic bundle
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/tectonic
+          key: tectonic-bundle-0.17.0
+
       - name: Compile cv.tex
-        run: tectonic cv.tex
+        run: |
+          for attempt in 1 2 3 4 5; do
+            if tectonic cv.tex; then
+              exit 0
+            fi
+            echo "tectonic compile failed (attempt $attempt/5), retrying after backoff..."
+            sleep $((attempt * 15))
+          done
+          echo "::error::tectonic compile failed after 5 attempts"
+          exit 1
 
       - name: Enforce one-page limit
         run: |
