@@ -1,0 +1,39 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install tectonic
+        run: |
+          curl -sL -o tectonic.tar.gz "https://github.com/tectonic-typesetting/tectonic/releases/download/tectonic%400.17.0/tectonic-0.17.0-x86_64-unknown-linux-musl.tar.gz"
+          tar xzf tectonic.tar.gz
+          chmod +x tectonic
+          sudo mv tectonic /usr/local/bin/tectonic
+
+      - name: Compile cv.tex
+        run: tectonic cv.tex
+
+      - name: Enforce one-page limit
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq poppler-utils
+          pages=$(pdfinfo cv.pdf | awk '/^Pages:/ {print $2}')
+          echo "cv.pdf has $pages page(s)"
+          if [ "$pages" -ne 1 ]; then
+            echo "::error::cv.pdf is $pages pages, expected exactly 1"
+            exit 1
+          fi
+
+      - name: Upload compiled PDF
+        uses: actions/upload-artifact@v4
+        with:
+          name: cv-pdf
+          path: cv.pdf

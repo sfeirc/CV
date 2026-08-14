@@ -1,0 +1,101 @@
+\documentclass[10pt]{article}
+\usepackage[top=0.35in,bottom=0.35in,left=0.55in,right=0.55in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{xcolor}
+
+\hypersetup{colorlinks=true, urlcolor=black, linkcolor=black}
+\pagestyle{empty}
+\setlength{\parskip}{0pt}
+\linespread{0.88}
+\renewcommand{\arraystretch}{0.8}
+
+\titleformat{\section}{\large\bfseries}{}{0em}{}[\vspace{-0.6em}\hrulefill]
+\titlespacing*{\section}{0pt}{0.1em}{0.1em}
+
+\titleformat{\subsection}[runin]{\bfseries}{}{0em}{}
+\newcommand{\entry}[4]{%
+  \noindent\textbf{#1} \hfill \textit{#2} \\
+  \textit{#3} \hfill \textit{#4}\\[-0.3em]
+}
+\newcommand{\projectentry}[2]{%
+  \noindent\textbf{#1} \hfill \textit{#2}\\[-0.3em]
+}
+
+\setlist[itemize]{leftmargin=1.1em, itemsep=0pt, topsep=0pt, parsep=0pt, partopsep=0pt}
+
+\begin{document}
+\fontsize{9.3pt}{11pt}\selectfont
+\begin{center}
+  {\LARGE \textbf{Clovis SFEIR}}\\[0.3em]
+  +33\,6\,95\,83\,95\,34 \;$\cdot$\; \href{mailto:clovis.sfeir.cs@gmail.com}{clovis.sfeir.cs@gmail.com} \;$\cdot$\;
+  \href{https://github.com/sfeirc}{github.com/sfeirc} \;$\cdot$\;
+  \href{https://linkedin.com/in/clovis-sfeir-388936240}{linkedin.com/in/clovis-sfeir-388936240} \;$\cdot$\;
+  \href{https://cloooooo.com}{cloooooo.com} \;$\cdot$\; French (Native) -- English (C1)
+\end{center}
+
+\section*{Profile}
+IMT Atlantique engineering student specialising in performance-critical systems and quantitative software for markets and industrial infrastructure. Built five C++20 systems benchmarked against industry references or verified against labeled ground-truth: ITCH~5.0 feed handler at \textbf{97\,ns p99} (\textbf{8.2$\times$} Aquis Exchange), options engine at \textbf{302$\times$} QuantLib, an Ornstein-Uhlenbeck-driven crude-spread trading engine, and a Modbus ICS intrusion detector with \textbf{100\% attack recall}.
+
+\section*{Education}
+\entry{IMT Atlantique -- Engineering Degree in Software Engineering (Apprenticeship)}{Sep 2025 -- Jun 2028}{Nantes, France}{Algorithms \& Data Structures, OS, Computer Networks, Distributed Systems, Cloud Computing, AI}
+\entry{Bachelor in Computer Science}{Sep 2022 -- Jun 2025}{La Rochelle, France}{\textbf{Class rank: 1/85} \textbar{} Software Engineering, Databases, Cybersecurity}
+\noindent\textbf{HRT Macro Placement Challenge 2026} (Hudson River Trading/Partcl) --- \textbf{24th/124} (top 20\%); hybrid analytical placer: force-directed global placement with timing-aware legalization; proxy cost \textbf{1.095} beats SA baseline (2.125) and RePlAce (1.458); field includes Stanford, Princeton, ETH~Z\"urich.
+
+\section*{Projects}
+
+\projectentry{ITCH 5.0 Market Data Feed Handler}{C++20, AF\_XDP, AVX2, lock-free}
+\begin{itemize}
+  \item AF\_XDP/BPF steers ITCH~5.0 multicast to a hugepage UMEM ring (kernel bypass); busy-poll receiver on an isolated core, \texttt{SCHED\_FIFO} prio~99; AVX2 \texttt{\_mm256\_cmpeq\_epi64} level search; open-addressed order map (\textless=50\% load).
+  \item Add \textbf{97\,ns}, cancel \textbf{13\,ns} (\textbf{8.2$\times$} Aquis Exchange); standard CI: 315/46\,ns; sustained \textbf{15.7\,M msgs/s} at p99=128\,ns over 10\,s; 0 dropped packets; zero allocations.
+\end{itemize}
+
+\projectentry{Options Pricing Engine}{C++20, AVX2, SABR, Crank-Nicolson FD}
+\begin{itemize}
+  \item AVX2 Black-Scholes (4-wide \texttt{\_\_m256d}), minimax normal CDF avoids \texttt{libm erf()}; Greeks in one pass; \textbf{150.9\,M prices/s} (\textbf{302$\times$} QuantLib); SABR surface (Hagan 2002 + Antonov), L-M calibration, 5$\times$9 surface in 174\,\textmu s.
+  \item American options via Crank-Nicolson FD (sinh-grid, Thomas TDMA): 110\,\textmu s/option; Sobol quasi-MC (antithetic + CV + IS); 10\,M-config validation vs QuantLib, max error \textless\,$10^{-6}$.
+\end{itemize}
+
+\projectentry{Crude Oil Spread Trading Engine}{C++20, stochastic processes, order book}
+\begin{itemize}
+  \item Models refining margins (3:2:1 crack spread, generalized N:M:K) and mean-reverting inter-crude spreads via an Ornstein-Uhlenbeck process (Euler-Maruyama) with a rolling z-score signal, matched by a price-time-priority order book.
+  \item OU stationary distribution verified against theory (500K-step sim); crack-spread formula checked to $10^{-9}$; order-book submit at \textbf{720\,ns} (non-crossing)/\textbf{1.24\,\textmu s} (crossing); 58 assertions/21 tests, ASan+UBSan clean.
+\end{itemize}
+
+\projectentry{Limit Order Book \& Matching Engine}{C++20, STL, CMake}
+\begin{itemize}
+  \item $O(1)$ cancel via \texttt{unordered\_map}; intrusive list per price level in a pre-pooled \texttt{Order} (2\,M nodes, 64\,MB); 32-byte aligned structs cut cache misses \textbf{73\%}; SPSC ring decouples I/O from matching.
+  \item Replay of 10\,M events: P50 0.6--1.0\,\textmu s, P99 2.3\,\textmu s, P99.9 4.8\,\textmu s; zero hot-path allocations.
+\end{itemize}
+
+\projectentry{ICS Intrusion Detection (Modbus/SCADA)}{C++20, protocol parsing, explainable rules}
+\begin{itemize}
+  \item Rule-based detector for Modbus TCP (no auth/encryption by protocol design) mapped to documented ICS attacks: protected-register writes (Stuxnet-style setpoint tampering), unauthorized function codes/unit IDs (Industroyer-style rogue commands), write-flood (replay/fuzzing) -- every alert names the exact rule that fired.
+  \item Parses MBAP+PDU at \textbf{39.2\,ns} (\textbf{25.5\,M msg/s}); parse+detect 50.3\,ns; \textbf{100\% recall, 0 false positives} on a labeled synthetic trace (78 records, 9 attacks); 57 assertions/17 tests, ASan+UBSan clean.
+\end{itemize}
+
+\section*{Work Experience}
+\entry{Infotel}{Nantes, France}{AI Engineer Apprentice -- Lab IA}{Sep 2025 -- Jun 2028}
+\begin{itemize}
+  \item Built a Rust-based agentic orchestration prototype (specs $\to$ blueprints $\to$ vertical slices $\to$ artifacts $\to$ tests $\to$ security reports); ownership model prevents use-after-free in concurrent task graphs; quality gates separate build/test/security scans from artifact-only checks; 928 Rust tests; incremental Merkle indexing for $O$(changed-files) re-index with requirement $\to$ code $\to$ test traceability.
+\end{itemize}
+\entry{Excelia Group}{La Rochelle, France}{Software Developer Intern / AI Software Engineer Intern}{Two internships: Jan--Mar 2025 \& May--Jul 2024}
+\begin{itemize}
+  \item RAG pipeline (chunking, OpenAI embeddings, flat FAISS, cross-encoder re-ranking): \textbf{40\% reduction} in lookup time vs.\ keyword-search; cut p95 latency 30--40\% via embedding cache + asyncio parallelisation; Prometheus/Grafana, Docker, GCP.
+  \item Real-time interview simulator (Next.js/React, GPT-4o, ElevenLabs TTS): streaming responses, scenario-branching state machine, A/B prompt-scoring harness.
+\end{itemize}
+
+\section*{Technical Skills}
+\noindent
+\begin{tabular}{@{}p{2.7cm}p{15.5cm}@{}}
+\textbf{Languages} & C++20, Python, Rust, TypeScript, SQL \\
+\textbf{Perf / Systems} & AF\_XDP, SIMD/AVX2, lock-free SPSC, cache-aware layout, \texttt{SCHED\_FIFO}, acquire/release atomics, ICS/SCADA protocol parsing (Modbus TCP) \\
+\textbf{ML / Quant} & Black-Scholes/SABR, Sobol quasi-MC, Kalman filter, Ornstein-Uhlenbeck, Johansen cointegration, LightGBM/XGB/CatBoost, FAISS \\
+\textbf{Infrastructure} & Docker, Prometheus/Grafana, GitHub Actions CI, GCP, Redis, ZeroMQ \\
+\textbf{Frameworks} & Flask, Node.js/Express, React/Next.js, REST/gRPC \\
+\end{tabular}
+
+\end{document}
