@@ -65,10 +65,10 @@ IMT Atlantique engineering student specialising in performance-critical systems 
   \item OU stationary distribution verified against theory (500K-step sim); crack-spread formula checked to $10^{-9}$; order-book submit at \textbf{720\,ns} (non-crossing)/\textbf{1.24\,\textmu s} (crossing); 58 assertions/21 tests, ASan+UBSan clean.
 \end{itemize}
 
-\projectentry{Limit Order Book \& Matching Engine}{C++20, STL, CMake}
+\projectentry{Reservoir Diffusivity PDE Solver}{C++20, OpenMP, finite-difference}
 \begin{itemize}
-  \item $O(1)$ cancel via \texttt{unordered\_map}; intrusive list per price level in a pre-pooled \texttt{Order} (2\,M nodes, 64\,MB); 32-byte aligned structs cut cache misses \textbf{73\%}; SPSC ring decouples I/O from matching.
-  \item Replay of 10\,M events: P50 0.6--1.0\,\textmu s, P99 2.3\,\textmu s, P99.9 4.8\,\textmu s; zero hot-path allocations.
+  \item Explicit FTCS and implicit Crank-Nicolson finite-difference schemes for the reservoir diffusivity (pressure-transient) equation; verified via grid-refinement convergence study against the closed-form erfc analytical solution -- error ratio converges to \textbf{4.0} as $dx$ halves (textbook 2nd-order accuracy) across 5 refinements.
+  \item OpenMP-parallelized stencil/assembly loops; measured (not assumed) scaling identifies the Amdahl's-law-bounded sequential Thomas solve and memory-bandwidth-bound behavior below L3 size; 13 test cases, 40{,}300 assertions; Docker image runs the full suite at build time.
 \end{itemize}
 
 \projectentry{ICS Intrusion Detection (Modbus/SCADA)}{C++20, protocol parsing, explainable rules}
@@ -92,8 +92,8 @@ IMT Atlantique engineering student specialising in performance-critical systems 
 \noindent
 \begin{tabular}{@{}p{2.7cm}p{15.5cm}@{}}
 \textbf{Languages} & C++20, Python, Rust, TypeScript, SQL \\
-\textbf{Perf / Systems} & AF\_XDP, SIMD/AVX2, lock-free SPSC, cache-aware layout, \texttt{SCHED\_FIFO}, acquire/release atomics, ICS/SCADA protocol parsing (Modbus TCP) \\
-\textbf{ML / Quant} & Black-Scholes/SABR, Sobol quasi-MC, Kalman filter, Ornstein-Uhlenbeck, Johansen cointegration, LightGBM/XGB/CatBoost, FAISS \\
+\textbf{Perf / Systems} & AF\_XDP, SIMD/AVX2, lock-free SPSC, OpenMP, cache-aware layout, \texttt{SCHED\_FIFO}, acquire/release atomics, ICS/SCADA protocol parsing (Modbus TCP) \\
+\textbf{ML / Quant} & Black-Scholes/SABR, Sobol quasi-MC, Kalman filter, Ornstein-Uhlenbeck, finite-difference PDE, Johansen cointegration, LightGBM/XGB/CatBoost, FAISS \\
 \textbf{Infrastructure} & Docker, Prometheus/Grafana, GitHub Actions CI, GCP, Redis, ZeroMQ \\
 \textbf{Frameworks} & Flask, Node.js/Express, React/Next.js, REST/gRPC \\
 \end{tabular}
