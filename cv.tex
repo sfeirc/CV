@@ -38,7 +38,7 @@
 \end{center}
 
 \section*{Profile}
-IMT Atlantique engineering student specialising in performance-critical systems and quantitative software for markets and industrial infrastructure. Built five C++20 systems benchmarked against industry references or verified against labeled ground-truth: ITCH~5.0 feed handler at \textbf{97\,ns p99} (\textbf{8.2$\times$} Aquis Exchange), options engine at \textbf{302$\times$} QuantLib, an Ornstein-Uhlenbeck-driven crude-spread trading engine, and a Modbus ICS intrusion detector with \textbf{100\% attack recall}.
+IMT Atlantique engineering student specialising in performance-critical systems and quantitative software for markets and industrial infrastructure. Built five C++20 systems benchmarked against industry references or verified against labeled ground-truth: ITCH~5.0 feed handler at \textbf{97\,ns p99} (\textbf{8.2$\times$} Aquis Exchange), options engine at \textbf{302$\times$} QuantLib, an Ornstein-Uhlenbeck-driven crude-spread trading engine, and an IEC-104 ICS intrusion detector with \textbf{100\% attack recall}.
 
 \section*{Education}
 \entry{IMT Atlantique -- Engineering Degree in Software Engineering (Apprenticeship)}{Sep 2025 -- Jun 2028}{Nantes, France}{Algorithms \& Data Structures, OS, Computer Networks, Distributed Systems, Cloud Computing, AI}
@@ -71,10 +71,10 @@ IMT Atlantique engineering student specialising in performance-critical systems 
   \item OpenMP-parallelized stencil/assembly loops; measured (not assumed) scaling identifies the Amdahl's-law-bounded sequential Thomas solve and memory-bandwidth-bound behavior below L3 size; 13 test cases, 40{,}300 assertions; Docker image runs the full suite at build time.
 \end{itemize}
 
-\projectentry{ICS Intrusion Detection (Modbus/SCADA)}{C++20, protocol parsing, explainable rules}
+\projectentry{ICS Intrusion Detection (IEC 60870-5-104)}{C++20, protocol parsing, explainable rules}
 \begin{itemize}
-  \item Rule-based detector for Modbus TCP (no auth/encryption by protocol design) mapped to documented ICS attacks: protected-register writes (Stuxnet-style setpoint tampering), unauthorized function codes/unit IDs (Industroyer-style rogue commands), write-flood (replay/fuzzing) -- every alert names the exact rule that fired.
-  \item Parses MBAP+PDU at \textbf{39.2\,ns} (\textbf{25.5\,M msg/s}); parse+detect 50.3\,ns; \textbf{100\% recall, 0 false positives} on a labeled synthetic trace (78 records, 9 attacks); 57 assertions/17 tests, ASan+UBSan clean.
+  \item Rule-based detector for IEC 60870-5-104 (no auth/encryption by protocol design) -- the actual telecontrol protocol behind the 2016 Kyiv blackout -- mapped to real attack patterns: control commands to unexpected breaker objects (the exact method used), sequence-number gaps (replay/desync), u-format/command floods.
+  \item Parses APCI+ASDU at \textbf{39.5\,ns} (\textbf{25.3\,M msg/s}); end-to-end parse+detect 337\,ns; \textbf{100\% recall, 0 false positives} on a labeled synthetic trace (100 records, 15 attacks across 5 rules); 153 assertions/37 tests, ASan+UBSan clean.
 \end{itemize}
 
 \section*{Work Experience}
@@ -92,7 +92,7 @@ IMT Atlantique engineering student specialising in performance-critical systems 
 \noindent
 \begin{tabular}{@{}p{2.7cm}p{15.5cm}@{}}
 \textbf{Languages} & C++20, Python, Rust, TypeScript, SQL \\
-\textbf{Perf / Systems} & AF\_XDP, SIMD/AVX2, lock-free SPSC, OpenMP, cache-aware layout, \texttt{SCHED\_FIFO}, acquire/release atomics, ICS/SCADA protocol parsing (Modbus TCP) \\
+\textbf{Perf / Systems} & AF\_XDP, SIMD/AVX2, lock-free SPSC, OpenMP, cache-aware layout, \texttt{SCHED\_FIFO}, acquire/release atomics, ICS/SCADA protocol parsing (Modbus, IEC-104) \\
 \textbf{ML / Quant} & Black-Scholes/SABR, Sobol quasi-MC, Kalman filter, Ornstein-Uhlenbeck, finite-difference PDE, Johansen cointegration, LightGBM/XGB/CatBoost, FAISS \\
 \textbf{Infrastructure} & Docker, Prometheus/Grafana, GitHub Actions CI, GCP, Redis, ZeroMQ \\
 \textbf{Frameworks} & Flask, Node.js/Express, React/Next.js, REST/gRPC \\
