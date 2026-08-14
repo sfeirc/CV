@@ -38,7 +38,7 @@
 \end{center}
 
 \section*{Profile}
-IMT Atlantique engineering student specialising in performance-critical systems and quantitative software for markets and industrial infrastructure. Built five systems (C++20/Rust) benchmarked against industry references or labeled ground-truth: ITCH~5.0 feed handler at \textbf{97\,ns p99} (\textbf{8.2$\times$} Aquis Exchange), an IIoT predictive-maintenance pipeline (\textbf{0/10 false positives}), an Ornstein-Uhlenbeck crude-spread engine, and an IEC-104 ICS intrusion detector with \textbf{100\% attack recall}.
+IMT Atlantique engineering student specialising in AI/ML and performance-critical systems for industrial infrastructure. Built five systems (Python/Rust/C++20) benchmarked against industry references or labeled ground-truth: a from-scratch BM25 retrieval engine for engineering documents (\textbf{MRR 0.944}), an IIoT predictive-maintenance pipeline (\textbf{0/10 false positives}), an Ornstein-Uhlenbeck crude-spread engine, and an IEC-104 ICS intrusion detector with \textbf{100\% attack recall}.
 
 \section*{Education}
 \entry{IMT Atlantique -- Engineering Degree in Software Engineering (Apprenticeship)}{Sep 2025 -- Jun 2028}{Nantes, France}{Algorithms \& Data Structures, OS, Computer Networks, Distributed Systems, Cloud Computing, AI}
@@ -47,10 +47,10 @@ IMT Atlantique engineering student specialising in performance-critical systems 
 
 \section*{Projects}
 
-\projectentry{ITCH 5.0 Market Data Feed Handler}{C++20, AF\_XDP, AVX2, lock-free}
+\projectentry{Engineering Docs RAG}{Python, BM25, information retrieval}
 \begin{itemize}
-  \item AF\_XDP/BPF steers ITCH~5.0 multicast to a hugepage UMEM ring (kernel bypass); busy-poll receiver on an isolated core, \texttt{SCHED\_FIFO} prio~99; AVX2 \texttt{\_mm256\_cmpeq\_epi64} level search; open-addressed order map (\textless=50\% load).
-  \item Add \textbf{97\,ns}, cancel \textbf{13\,ns} (\textbf{8.2$\times$} Aquis Exchange); standard CI: 315/46\,ns; sustained \textbf{15.7\,M msgs/s} at p99=128\,ns over 10\,s; 0 dropped packets; zero allocations.
+  \item From-scratch Okapi BM25 retrieval engine (chunking + ranking) for engineering documents (datasheets, HAZOP-style procedures); pluggable extractive/LLM generator interface, zero paid API calls in tests/CI/demo by design.
+  \item Hand-derived BM25 scoring verified to 9 significant figures; measured \textbf{precision@1 0.90}, recall@5 1.00, \textbf{MRR 0.944} on a 40-question labeled set; \textasciitilde3{,}330 docs/s ingest; 53 tests, zero runtime dependencies.
 \end{itemize}
 
 \projectentry{IIoT Predictive Maintenance}{Rust, tokio, EWMA/CUSUM}
@@ -92,8 +92,8 @@ IMT Atlantique engineering student specialising in performance-critical systems 
 \noindent
 \begin{tabular}{@{}p{2.7cm}p{15.5cm}@{}}
 \textbf{Languages} & C++20, Python, Rust, TypeScript, SQL \\
-\textbf{Perf / Systems} & AF\_XDP, SIMD/AVX2, lock-free SPSC, OpenMP, cache-aware layout, \texttt{SCHED\_FIFO}, acquire/release atomics, ICS/SCADA protocol parsing (Modbus, IEC-104) \\
-\textbf{ML / Quant} & EWMA/CUSUM change-detection, Kalman filter, Ornstein-Uhlenbeck, finite-difference PDE, Johansen cointegration, LightGBM/XGB/CatBoost, FAISS \\
+\textbf{Perf / Systems} & OpenMP, cache-aware layout, acquire/release atomics, ICS/SCADA protocol parsing (Modbus, IEC-104) \\
+\textbf{ML / Quant} & BM25/information retrieval, EWMA/CUSUM change-detection, Kalman filter, Ornstein-Uhlenbeck, finite-difference PDE, LightGBM/XGB/CatBoost, FAISS \\
 \textbf{Infrastructure} & Docker, tokio async, Prometheus/Grafana, GitHub Actions CI, GCP, Redis, ZeroMQ \\
 \textbf{Frameworks} & Flask, Node.js/Express, React/Next.js, REST/gRPC \\
 \end{tabular}
