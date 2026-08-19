@@ -38,7 +38,7 @@
 \end{center}
 
 \section*{Profile}
-IMT Atlantique engineering student specialising in quantitative modeling, statistical signal processing, and applied ML for industrial/financial systems. Built five systems (Python/Rust/C++20) benchmarked against industry references or labeled ground-truth: a from-scratch BM25 retrieval engine (\textbf{MRR 0.944}), an IIoT predictive-maintenance pipeline (\textbf{0/10 false positives}), an Ornstein-Uhlenbeck crude-spread engine, and a finite-difference reservoir PDE solver verified to \textbf{2nd-order convergence}.
+IMT Atlantique engineering student specialising in quantitative modeling, statistical signal processing, and applied ML for industrial/financial systems. Built five systems (Python/Rust/C++20) benchmarked against industry references or labeled ground-truth: a from-scratch BM25 retrieval engine (\textbf{MRR 0.944}), an IIoT predictive-maintenance pipeline (\textbf{0/10 false positives}), an Ornstein-Uhlenbeck crude-spread engine, and an HFT limit-order-book matching engine at \textbf{sub-microsecond P50 latency}.
 
 \section*{Education}
 \entry{IMT Atlantique -- Engineering Degree in Software Engineering (Apprenticeship)}{Sep 2025 -- Jun 2028}{Nantes, France}{Algorithms \& Data Structures, OS, Computer Networks, Distributed Systems, Cloud Computing, AI}
@@ -65,10 +65,10 @@ IMT Atlantique engineering student specialising in quantitative modeling, statis
   \item OU stationary distribution verified against theory (500K-step sim); crack-spread formula checked to $10^{-9}$; order-book submit at \textbf{720\,ns} (non-crossing)/\textbf{1.24\,\textmu s} (crossing); 58 assertions/21 tests, ASan+UBSan clean.
 \end{itemize}
 
-\projectentry{Reservoir Diffusivity PDE Solver}{C++20, OpenMP, finite-difference}
+\projectentry{HFT Limit Order Book Matching Engine}{C++20, cache-aware layout, intrusive data structures}
 \begin{itemize}
-  \item Explicit FTCS and implicit Crank-Nicolson finite-difference schemes for the reservoir diffusivity (pressure-transient) equation; verified via grid-refinement convergence study against the closed-form erfc analytical solution -- error ratio converges to \textbf{4.0} as $dx$ halves (textbook 2nd-order accuracy) across 5 refinements.
-  \item OpenMP-parallelized stencil/assembly loops; measured (not assumed) scaling identifies the Amdahl's-law-bounded sequential Thomas solve and memory-bandwidth-bound behavior below L3 size; 13 test cases, 40{,}300 assertions; Docker image runs the full suite at build time.
+  \item Price-time-priority matching engine (limit/market/cancel) with intrusive doubly-linked price-level lists (\textbf{O(1) cancel} via pointer unlink) and pre-allocated object pooling to keep the hot loop free of \texttt{malloc}/\texttt{new}.
+  \item Benchmark suite across three synthetic order-flow regimes: \textbf{2.3M+ msg/s} single-threaded throughput, \textbf{P50 0.6--1.0\,\textmu s} / P99 2--4\,\textmu s latency, \textbf{zero hot-path allocations}; unit tested.
 \end{itemize}
 
 \projectentry{ICS Intrusion Detection (IEC 60870-5-104)}{C++20, protocol parsing, explainable rules}
@@ -91,9 +91,9 @@ IMT Atlantique engineering student specialising in quantitative modeling, statis
 \section*{Technical Skills}
 \noindent
 \begin{tabular}{@{}p{2.7cm}p{15.5cm}@{}}
-\textbf{ML / Quant} & BM25/information retrieval, EWMA/CUSUM change-detection, Kalman filter, Ornstein-Uhlenbeck, finite-difference PDE, LightGBM/XGB/CatBoost, FAISS \\
+\textbf{ML / Quant} & BM25/information retrieval, EWMA/CUSUM change-detection, Kalman filter, Ornstein-Uhlenbeck, LightGBM/XGB/CatBoost, FAISS \\
 \textbf{Languages} & Python, C++20, Rust, TypeScript, SQL \\
-\textbf{Perf / Systems} & OpenMP, cache-aware layout, acquire/release atomics, ICS/SCADA protocol parsing (Modbus, IEC-104) \\
+\textbf{Perf / Systems} & cache-aware layout, intrusive linked lists, acquire/release atomics, ICS/SCADA protocol parsing (Modbus, IEC-104) \\
 \textbf{Infrastructure} & Docker, tokio async, Prometheus/Grafana, GitHub Actions CI, GCP, Redis, ZeroMQ \\
 \textbf{Frameworks} & Flask, Node.js/Express, React/Next.js, REST/gRPC \\
 \end{tabular}

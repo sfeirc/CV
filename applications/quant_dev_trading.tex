@@ -38,7 +38,7 @@
 \end{center}
 
 \section*{Profile}
-IMT Atlantique engineering student specialising in quantitative systems and trading infrastructure. Built five systems (C++20/Rust/Python) benchmarked against industry references or labeled ground-truth: an Ornstein-Uhlenbeck crude-spread trading engine, an HFT limit-order-book matching engine at \textbf{sub-microsecond P50 latency}, a finite-difference reservoir PDE solver verified to \textbf{2nd-order convergence}, and an IEC-104 ICS intrusion detector with \textbf{100\% attack recall}.
+IMT Atlantique engineering student specialising in quantitative systems and trading infrastructure. Built five systems (C++20/Rust/Python) benchmarked against industry references or labeled ground-truth: an Ornstein-Uhlenbeck crude-spread trading engine, an HFT limit-order-book matching engine at \textbf{sub-microsecond P50 latency}, an EWMA/CUSUM statistical signal-detection pipeline (\textbf{0/10 false positives}), and an IEC-104 ICS intrusion detector with \textbf{100\% attack recall}.
 
 \section*{Education}
 \entry{IMT Atlantique -- Engineering Degree in Software Engineering (Apprenticeship)}{Sep 2025 -- Jun 2028}{Nantes, France}{Algorithms \& Data Structures, OS, Computer Networks, Distributed Systems, Cloud Computing, AI}
@@ -59,10 +59,10 @@ IMT Atlantique engineering student specialising in quantitative systems and trad
   \item Benchmark suite across three synthetic order-flow regimes: \textbf{2.3M+ msg/s} single-threaded throughput, \textbf{P50 0.6--1.0\,\textmu s} / P99 2--4\,\textmu s latency, \textbf{zero hot-path allocations}; unit tested.
 \end{itemize}
 
-\projectentry{Reservoir Diffusivity PDE Solver}{C++20, OpenMP, finite-difference}
+\projectentry{IIoT Predictive Maintenance}{Rust, tokio, EWMA/CUSUM}
 \begin{itemize}
-  \item Explicit FTCS and implicit Crank-Nicolson finite-difference schemes for the reservoir diffusivity (pressure-transient) equation; verified via grid-refinement convergence study against the closed-form erfc analytical solution -- error ratio converges to \textbf{4.0} as $dx$ halves (textbook 2nd-order accuracy) across 5 refinements.
-  \item OpenMP-parallelized stencil/assembly loops; measured (not assumed) scaling identifies the Amdahl's-law-bounded sequential Thomas solve and memory-bandwidth-bound behavior below L3 size; 13 test cases, 40{,}300 assertions.
+  \item Async telemetry pipeline (\texttt{tokio} mpsc) fuses EWMA + CUSUM control charts across 3 sensor channels to detect developing degradation signatures, with linear-trend estimation -- the same statistical-process-control family used for regime/change-point detection in trading signals.
+  \item Sensor-fusion tuning (2-of-3 channels + widened control limits) cut false positives from a 0.41--0.50 precision baseline to \textbf{0/10 across 10 seeds}; precision \textbf{1.0000}, recall 0.9642, F1 0.9818; \textbf{1.6\,M samples/s}; 26 tests, 0 failures.
 \end{itemize}
 
 \projectentry{Engineering Docs RAG}{Python, BM25, information retrieval}
@@ -91,8 +91,8 @@ IMT Atlantique engineering student specialising in quantitative systems and trad
 \section*{Technical Skills}
 \noindent
 \begin{tabular}{@{}p{2.7cm}p{15.5cm}@{}}
-\textbf{ML / Quant} & Ornstein-Uhlenbeck, finite-difference PDE, BM25/information retrieval, EWMA/CUSUM change-detection, Kalman filter, LightGBM/XGB/CatBoost \\
-\textbf{Perf / Systems} & OpenMP, cache-aware layout, acquire/release atomics, intrusive linked lists, ICS/SCADA protocol parsing (Modbus, IEC-104) \\
+\textbf{ML / Quant} & Ornstein-Uhlenbeck, EWMA/CUSUM change-detection, Kalman filter, BM25/information retrieval, LightGBM/XGB/CatBoost \\
+\textbf{Perf / Systems} & cache-aware layout, intrusive linked lists, acquire/release atomics, ICS/SCADA protocol parsing (Modbus, IEC-104) \\
 \textbf{Languages} & C++20, Python, Rust, TypeScript, SQL \\
 \textbf{Infrastructure} & Docker, tokio async, Prometheus/Grafana, GitHub Actions CI, GCP, Redis, ZeroMQ \\
 \textbf{Frameworks} & Flask, Node.js/Express, React/Next.js, REST/gRPC \\
