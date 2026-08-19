@@ -38,7 +38,7 @@
 \end{center}
 
 \section*{Profile}
-IMT Atlantique engineering student specialising in quantitative modeling, statistical signal processing, and applied ML for industrial/financial systems. Built five systems (Python/Rust/C++20) benchmarked against industry references or labeled ground-truth: a from-scratch BM25 retrieval engine (\textbf{MRR 0.944}), an IIoT predictive-maintenance pipeline (\textbf{0/10 false positives}), an Ornstein-Uhlenbeck crude-spread engine, and a finite-difference PDE solver verified to \textbf{2nd-order convergence} against a closed-form solution.
+IMT Atlantique engineering student specialising in trading-platform infrastructure and low-latency systems engineering. Built five systems (C++20/Rust/Python) benchmarked against industry references or labeled ground-truth: an HFT limit-order-book matching engine at \textbf{sub-microsecond P50 latency} with zero hot-path allocations, a protocol parser processing \textbf{25.3M msg/s}, an async Rust telemetry pipeline fusing statistical change-detection across channels, and an Ornstein-Uhlenbeck crude-spread trading engine.
 
 \section*{Education}
 \entry{IMT Atlantique -- Engineering Degree in Software Engineering (Apprenticeship)}{Sep 2025 -- Jun 2028}{Nantes, France}{Algorithms \& Data Structures, OS, Computer Networks, Distributed Systems, Cloud Computing, AI}
@@ -47,15 +47,21 @@ IMT Atlantique engineering student specialising in quantitative modeling, statis
 
 \section*{Projects}
 
-\projectentry{Engineering Docs RAG}{Python, BM25, information retrieval}
+\projectentry{HFT Limit Order Book Matching Engine}{C++20, cache-aware layout, intrusive data structures}
 \begin{itemize}
-  \item From-scratch Okapi BM25 retrieval engine (chunking + ranking) for engineering documents (datasheets, HAZOP-style procedures); pluggable extractive/LLM generator interface, zero paid API calls in tests/CI/demo by design.
-  \item Hand-derived BM25 scoring verified to 9 significant figures; measured \textbf{precision@1 0.90}, recall@5 1.00, \textbf{MRR 0.944} on a 40-question labeled set; \textasciitilde3{,}330 docs/s ingest; 53 tests, zero runtime dependencies.
+  \item Price-time-priority matching engine (limit/market/cancel) with intrusive doubly-linked price-level lists (\textbf{O(1) cancel} via pointer unlink) and pre-allocated object pooling to keep the hot loop free of \texttt{malloc}/\texttt{new}; 32-byte cache-aligned order objects.
+  \item Benchmark suite across three synthetic order-flow regimes: \textbf{2.3M+ msg/s} single-threaded throughput, \textbf{P50 0.6--1.0\,\textmu s} / P99 2--4\,\textmu s latency, \textbf{zero hot-path allocations}; unit tested.
+\end{itemize}
+
+\projectentry{ICS Intrusion Detection (IEC 60870-5-104)}{C++20, protocol parsing, explainable rules}
+\begin{itemize}
+  \item Rule-based detector for IEC 60870-5-104 (no auth/encryption by protocol design) mapped to real attack patterns: control commands to unexpected breaker objects, sequence-number gaps (replay/desync), u-format/command floods -- same class of throughput-critical binary-protocol parsing a market-data or order-entry gateway needs.
+  \item Parses APCI+ASDU at \textbf{39.5\,ns} (\textbf{25.3\,M msg/s}); end-to-end parse+detect 337\,ns; \textbf{100\% recall, 0 false positives} on a labeled synthetic trace (100 records, 15 attacks across 5 rules); 153 assertions/37 tests, ASan+UBSan clean.
 \end{itemize}
 
 \projectentry{IIoT Predictive Maintenance}{Rust, tokio, EWMA/CUSUM}
 \begin{itemize}
-  \item Async telemetry pipeline (\texttt{tokio} mpsc) fuses EWMA + CUSUM control charts across 3 sensor channels to detect developing bearing-wear signatures, with linear-trend remaining-useful-life estimation.
+  \item Async telemetry pipeline (\texttt{tokio} mpsc, backpressure-aware channels) fuses EWMA + CUSUM control charts across 3 sensor streams to detect developing degradation signatures in real time.
   \item Sensor-fusion tuning (2-of-3 channels + widened control limits) cut false positives from a 0.41--0.50 precision baseline to \textbf{0/10 across 10 seeds}; precision \textbf{1.0000}, recall 0.9642, F1 0.9818; \textbf{1.6\,M samples/s}; 26 tests, 0 failures.
 \end{itemize}
 
@@ -65,16 +71,10 @@ IMT Atlantique engineering student specialising in quantitative modeling, statis
   \item OU stationary distribution verified against theory (500K-step sim); crack-spread formula checked to $10^{-9}$; order-book submit at \textbf{720\,ns} (non-crossing)/\textbf{1.24\,\textmu s} (crossing); 58 assertions/21 tests, ASan+UBSan clean.
 \end{itemize}
 
-\projectentry{Reservoir Diffusivity PDE Solver}{C++20, OpenMP, finite-difference}
+\projectentry{Engineering Docs RAG}{Python, BM25, information retrieval}
 \begin{itemize}
-  \item Explicit FTCS and implicit Crank-Nicolson finite-difference schemes -- the same discretization family used for parabolic pricing PDEs -- solving the reservoir diffusivity equation, grid-refinement convergence study against the closed-form erfc analytical solution.
-  \item Error ratio converges to \textbf{4.0} as $dx$ halves (verified 2nd-order accuracy, not assumed) across 5 refinements; measured (not assumed) OpenMP scaling identifies the Amdahl's-law-bounded sequential solve; 13 test cases, 40{,}300 assertions -- the validate-against-ground-truth discipline any model needs before it's trusted.
-\end{itemize}
-
-\projectentry{HFT Limit Order Book Matching Engine}{C++20, cache-aware layout, intrusive data structures}
-\begin{itemize}
-  \item Price-time-priority matching engine (limit/market/cancel) with intrusive doubly-linked price-level lists (\textbf{O(1) cancel} via pointer unlink) and pre-allocated object pooling to keep the hot loop free of \texttt{malloc}/\texttt{new}.
-  \item Benchmark suite across three synthetic order-flow regimes: \textbf{2.3M+ msg/s} single-threaded throughput, \textbf{P50 0.6--1.0\,\textmu s} / P99 2--4\,\textmu s latency, \textbf{zero hot-path allocations}; unit tested.
+  \item From-scratch Okapi BM25 retrieval engine (chunking + ranking) for engineering documents (datasheets, HAZOP-style procedures); pluggable extractive/LLM generator interface, zero paid API calls in tests/CI/demo by design.
+  \item Hand-derived BM25 scoring verified to 9 significant figures; measured \textbf{precision@1 0.90}, recall@5 1.00, \textbf{MRR 0.944} on a 40-question labeled set; \textasciitilde3{,}330 docs/s ingest; 53 tests, zero runtime dependencies.
 \end{itemize}
 
 \section*{Work Experience}
@@ -91,10 +91,10 @@ IMT Atlantique engineering student specialising in quantitative modeling, statis
 \section*{Technical Skills}
 \noindent
 \begin{tabular}{@{}p{2.7cm}p{15.5cm}@{}}
-\textbf{ML / Quant} & BM25/information retrieval, EWMA/CUSUM change-detection, Kalman filter, Ornstein-Uhlenbeck, finite-difference PDE, LightGBM/XGB/CatBoost, FAISS \\
-\textbf{Languages} & Python, C++20, Rust, TypeScript, SQL \\
-\textbf{Perf / Systems} & OpenMP, cache-aware layout, intrusive linked lists, acquire/release atomics \\
+\textbf{Perf / Systems} & cache-aware layout, intrusive linked lists, acquire/release atomics, lock-free-adjacent design, ICS/SCADA protocol parsing (Modbus, IEC-104) \\
 \textbf{Infrastructure} & Docker, tokio async, Prometheus/Grafana, GitHub Actions CI, GCP, Redis, ZeroMQ \\
+\textbf{Languages} & C++20, Rust, Python, TypeScript, SQL \\
+\textbf{ML / Quant} & EWMA/CUSUM change-detection, Ornstein-Uhlenbeck, BM25/information retrieval, Kalman filter \\
 \textbf{Frameworks} & Flask, Node.js/Express, React/Next.js, REST/gRPC \\
 \end{tabular}
 

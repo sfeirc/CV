@@ -20,4 +20,4 @@ Precise control over spacing and page count matters more for a CV than it sounds
 
 ## Role-targeted versions
 
-`applications/` holds three archetype variants of this CV — `systems_swe.tex`, `quant_dev_trading.tex`, `quant_research.tex` — each reordering the project lineup, profile summary, and skills emphasis for a different role type, all still one page. `applications/pdf/` has the compiled PDFs, one per Summer 2027 internship application, named by company and role.
+`applications/` holds six archetype variants of this CV — `systems_swe.tex`, `platform_engineer.tex`, `quant_dev_trading.tex`, `market_maker_trader.tex`, `quant_research.tex`, `discretionary_research.tex` — each reasoned independently about which projects actually fit that role family (not just relabeled), reordering the project lineup, profile summary, and skills emphasis, all still one page. `applications/pdf/` has the compiled PDFs, one per Summer 2027 internship application, named by company and role.
