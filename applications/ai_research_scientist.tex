@@ -1,0 +1,101 @@
+\documentclass[10pt]{article}
+\usepackage[top=0.35in,bottom=0.35in,left=0.55in,right=0.55in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{xcolor}
+
+\hypersetup{colorlinks=true, urlcolor=black, linkcolor=black}
+\pagestyle{empty}
+\setlength{\parskip}{0pt}
+\linespread{0.88}
+\renewcommand{\arraystretch}{0.8}
+
+\titleformat{\section}{\large\bfseries}{}{0em}{}[\vspace{-0.6em}\hrulefill]
+\titlespacing*{\section}{0pt}{0.1em}{0.1em}
+
+\titleformat{\subsection}[runin]{\bfseries}{}{0em}{}
+\newcommand{\entry}[4]{%
+  \noindent\textbf{#1} \hfill \textit{#2} \\
+  \textit{#3} \hfill \textit{#4}\\[-0.3em]
+}
+\newcommand{\projectentry}[2]{%
+  \noindent\textbf{#1} \hfill \textit{#2}\\[-0.3em]
+}
+
+\setlist[itemize]{leftmargin=1.1em, itemsep=0pt, topsep=0pt, parsep=0pt, partopsep=0pt}
+
+\begin{document}
+\fontsize{9.3pt}{11pt}\selectfont
+\begin{center}
+  {\LARGE \textbf{Clovis SFEIR}}\\[0.3em]
+  +33\,6\,95\,83\,95\,34 \;$\cdot$\; \href{mailto:clovis.sfeir.cs@gmail.com}{clovis.sfeir.cs@gmail.com} \;$\cdot$\;
+  \href{https://github.com/sfeirc}{github.com/sfeirc} \;$\cdot$\;
+  \href{https://linkedin.com/in/clovis-sfeir-388936240}{linkedin.com/in/clovis-sfeir-388936240} \;$\cdot$\;
+  \href{https://cloooooo.com}{cloooooo.com} \;$\cdot$\; French (Native) -- English (C1)
+\end{center}
+
+\section*{Profile}
+IMT Atlantique engineering student specialising in applied ML, information retrieval, and quantitative/statistical modeling. Built five systems (Python/Rust/C++20) benchmarked against industry references or labeled ground-truth: a from-scratch retrieval engine with a pluggable LLM generator interface (\textbf{MRR 0.944}), an async Rust telemetry pipeline fusing statistical change-detection across sensor channels (\textbf{0/10 false positives}), an Ornstein-Uhlenbeck stochastic-process trading engine, and a finite-difference PDE solver verified to \textbf{2nd-order convergence} against a closed-form solution.
+
+\section*{Education}
+\entry{IMT Atlantique -- Engineering Degree in Software Engineering (Apprenticeship)}{Sep 2025 -- Jun 2028}{Nantes, France}{Algorithms \& Data Structures, OS, Computer Networks, Distributed Systems, Cloud Computing, AI}
+\entry{Bachelor in Computer Science}{Sep 2022 -- Jun 2025}{La Rochelle, France}{\textbf{Class rank: 1/85} \textbar{} Software Engineering, Databases, Cybersecurity}
+\noindent\textbf{HRT Macro Placement Challenge 2026} (Hudson River Trading/Partcl) --- \textbf{24th/124} (top 20\%); hybrid analytical placer: force-directed global placement with timing-aware legalization; proxy cost \textbf{1.095} beats SA baseline (2.125) and RePlAce (1.458); field includes Stanford, Princeton, ETH~Z\"urich.
+
+\section*{Projects}
+
+\projectentry{Engineering Docs RAG}{Python, BM25, LLM-agent tooling}
+\begin{itemize}
+  \item From-scratch Okapi BM25 retrieval engine (chunking + ranking) for engineering documents, with a pluggable extractive/LLM generator interface; zero paid API calls in tests/CI/demo by design.
+  \item Hand-derived BM25 scoring verified to 9 significant figures; measured \textbf{precision@1 0.90}, recall@5 1.00, \textbf{MRR 0.944} on a 40-question labeled set; \textasciitilde3{,}330 docs/s ingest; 53 tests, zero runtime dependencies.
+\end{itemize}
+
+\projectentry{IIoT Predictive Maintenance}{Rust, tokio, EWMA/CUSUM}
+\begin{itemize}
+  \item Async telemetry pipeline (\texttt{tokio} mpsc) fuses EWMA + CUSUM statistical change-detection across 3 sensor channels to flag developing degradation signatures, with linear-trend estimation.
+  \item Sensor-fusion tuning (2-of-3 channels + widened control limits) cut false positives from a 0.41--0.50 precision baseline to \textbf{0/10 across 10 seeds}; precision \textbf{1.0000}, recall 0.9642, F1 0.9818; \textbf{1.6\,M samples/s}; 26 tests, 0 failures.
+\end{itemize}
+
+\projectentry{Crude Oil Spread Trading Engine}{C++20, stochastic processes, order book}
+\begin{itemize}
+  \item Models refining margins (3:2:1 crack spread, generalized N:M:K) and mean-reverting inter-crude spreads via an Ornstein-Uhlenbeck process (Euler-Maruyama) with a rolling z-score signal, matched by a price-time-priority order book.
+  \item OU stationary distribution verified against theory (500K-step sim); crack-spread formula checked to $10^{-9}$; 58 assertions/21 tests, ASan+UBSan clean.
+\end{itemize}
+
+\projectentry{Reservoir Diffusivity PDE Solver}{C++20, OpenMP, finite-difference}
+\begin{itemize}
+  \item Explicit FTCS and implicit Crank-Nicolson finite-difference schemes solving the reservoir diffusivity equation, grid-refinement convergence study against the closed-form erfc analytical solution -- the same validate-against-ground-truth discipline a research environment expects before trusting a numerical result.
+  \item Error ratio converges to \textbf{4.0} as $dx$ halves (verified 2nd-order accuracy, not assumed) across 5 refinements; measured (not assumed) OpenMP scaling; 13 test cases, 40{,}300 assertions.
+\end{itemize}
+
+\projectentry{HFT Limit Order Book Matching Engine}{C++20, cache-aware layout, intrusive data structures}
+\begin{itemize}
+  \item Price-time-priority matching engine with intrusive doubly-linked price-level lists (\textbf{O(1) cancel}) and pre-allocated object pooling -- built to show that research code and production-grade infrastructure aren't mutually exclusive.
+  \item Benchmark suite across three synthetic order-flow regimes: \textbf{2.3M+ msg/s} single-threaded throughput, \textbf{P50 0.6--1.0\,\textmu s} latency, zero hot-path allocations; unit tested.
+\end{itemize}
+
+\section*{Work Experience}
+\entry{Infotel}{Nantes, France}{AI Engineer Apprentice -- Lab IA}{Sep 2025 -- Jun 2028}
+\begin{itemize}
+  \item Built a Rust-based autonomous, agentic software-delivery harness that takes a complete specification through architecture synthesis (subsystems, interface contracts), epic/slice decomposition, and TDD-first generation to a tested, deployable application end-to-end; automated compile+test quality gates with iterative self-repair, independent code-review pass, and cross-slice conflict detection before delivery; 928 Rust tests.
+\end{itemize}
+\entry{Excelia Group}{La Rochelle, France}{Software Developer Intern / AI Software Engineer Intern}{Two internships: Jan--Mar 2025 \& May--Jul 2024}
+\begin{itemize}
+  \item RAG pipeline (chunking, OpenAI embeddings, flat FAISS, cross-encoder re-ranking): \textbf{40\% reduction} in lookup time vs.\ keyword-search; cut p95 latency 30--40\% via embedding cache + asyncio parallelisation; Prometheus/Grafana, Docker, GCP.
+  \item Real-time interview simulator (Next.js/React, GPT-4o, ElevenLabs TTS): streaming responses, scenario-branching state machine, A/B prompt-scoring harness.
+\end{itemize}
+
+\section*{Technical Skills}
+\noindent
+\begin{tabular}{@{}p{2.7cm}p{15.5cm}@{}}
+\textbf{ML / Quant} & BM25/information retrieval, EWMA/CUSUM change-detection, Kalman filter, Ornstein-Uhlenbeck, finite-difference PDE, LightGBM/XGB/CatBoost, FAISS \\
+\textbf{Languages} & Python, C++20, Rust, TypeScript, SQL \\
+\textbf{Perf / Systems} & OpenMP, cache-aware layout, intrusive linked lists, acquire/release atomics \\
+\textbf{Infrastructure} & Docker, tokio async, Prometheus/Grafana, GitHub Actions CI, GCP, Redis \\
+\textbf{Frameworks} & Flask, Node.js/Express, React/Next.js, REST/gRPC \\
+\end{tabular}
+
+\end{document}
