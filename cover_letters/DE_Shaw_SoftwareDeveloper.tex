@@ -1,0 +1,41 @@
+\documentclass[11pt]{article}
+\usepackage[top=1in,bottom=1in,left=1.1in,right=1.1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{hyperref}
+\usepackage{setspace}
+
+\hypersetup{colorlinks=true, urlcolor=black, linkcolor=black}
+\pagestyle{empty}
+\setstretch{1.08}
+\setlength{\parskip}{0.8em}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+\textbf{\large Clovis SFEIR} \\
+Nantes, France \\
++33\,6\,95\,83\,95\,34 \;$\cdot$\; \href{mailto:clovis.sfeir.cs@gmail.com}{clovis.sfeir.cs@gmail.com} \;$\cdot$\; \href{https://github.com/sfeirc}{github.com/sfeirc}
+
+\vspace{1.2em}
+D.\ E.\ Shaw \& Co. \\
+Software Developer Internship -- New York, Summer 2027
+
+\vspace{1.2em}
+Dear D.\ E.\ Shaw Hiring Team,
+
+I'm writing to apply for the Software Developer Intern position (New York, Summer 2027). D.\ E.\ Shaw's reputation for treating software engineering as a genuine research discipline -- building systems where correctness and performance both actually matter, not one traded off against the other -- is exactly the kind of environment I want to work in.
+
+I'm an engineering student at IMT Atlantique (Nantes, France), on an apprenticeship track pairing my degree with an AI Engineer role at Infotel's Lab IA. Outside of coursework, I build systems I benchmark against real references rather than assumptions. Most relevant here: a C++20 limit-order-book matching engine implementing price-time priority with intrusive doubly-linked price-level lists for O(1) cancellation and pre-allocated object pooling to keep the hot path free of heap allocation -- it sustains 2.3M+ messages/second single-threaded with P50 latency of 0.6--1.0\,\textmu s, verified with a reproducible benchmark suite across three synthetic order-flow regimes, not a single cherry-picked run. A companion project models mean-reverting commodity spreads with an Ornstein-Uhlenbeck process, matched against a price-time-priority order book of my own -- I care about the same rigor on the modeling side as on the systems side, and verify one against the other.
+
+I also placed 24th out of 124 teams (top 20\%, alongside entrants from Stanford, Princeton, and ETH Z\"urich) in the HRT/Partcl Macro Placement Challenge 2026, building a hybrid analytical VLSI placer combining force-directed global placement with timing-aware legalization.
+
+What draws me to D.\ E.\ Shaw specifically is that it was founded as a computing company that happens to trade, not the reverse -- I'd rather spend a summer solving hard distributed-systems and performance problems where the domain itself is intellectually serious than doing generic backend work. I'd welcome the chance to bring that same build-it-and-verify-it discipline to your infrastructure.
+
+Thank you for your consideration -- I'd be glad to walk through any of this work in more depth.
+
+\vspace{1em}
+Best regards, \\
+Clovis Sfeir
+
+\end{document}
