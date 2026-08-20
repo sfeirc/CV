@@ -1,0 +1,95 @@
+\documentclass[10pt]{article}
+\usepackage[top=0.35in,bottom=0.35in,left=0.55in,right=0.55in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{xcolor}
+
+\hypersetup{colorlinks=true, urlcolor=black, linkcolor=black}
+\pagestyle{empty}
+\setlength{\parskip}{0pt}
+\linespread{0.88}
+\renewcommand{\arraystretch}{0.8}
+
+\titleformat{\section}{\large\bfseries}{}{0em}{}[\vspace{-0.6em}\hrulefill]
+\titlespacing*{\section}{0pt}{0.1em}{0.1em}
+
+\titleformat{\subsection}[runin]{\bfseries}{}{0em}{}
+\newcommand{\entry}[4]{%
+  \noindent\textbf{#1} \hfill \textit{#2} \\
+  \textit{#3} \hfill \textit{#4}\\[-0.3em]
+}
+\newcommand{\projectentry}[2]{%
+  \noindent\textbf{#1} \hfill \textit{#2}\\[-0.3em]
+}
+
+\setlist[itemize]{leftmargin=1.1em, itemsep=0pt, topsep=0pt, parsep=0pt, partopsep=0pt}
+
+\begin{document}
+\fontsize{9.3pt}{11pt}\selectfont
+\begin{center}
+  {\LARGE \textbf{Clovis SFEIR}}\\[0.3em]
+  +33\,6\,95\,83\,95\,34 \;$\cdot$\; \href{mailto:clovis.sfeir.cs@gmail.com}{clovis.sfeir.cs@gmail.com} \;$\cdot$\;
+  \href{https://github.com/sfeirc}{github.com/sfeirc} \;$\cdot$\;
+  \href{https://linkedin.com/in/clovis-sfeir-388936240}{linkedin.com/in/clovis-sfeir-388936240} \;$\cdot$\;
+  \href{https://cloooooo.com}{cloooooo.com} \;$\cdot$\; French (Native) -- English (C1)
+\end{center}
+
+\section*{Profile}
+IMT Atlantique engineering student specialising in performance-conscious web engineering and low-latency systems. Built a production real-time TypeScript/React application (streaming responses, scenario-branching state machine) alongside five systems (C++20/Rust/Python) benchmarked against industry references or labeled ground-truth, including an HFT limit-order-book matching engine at \textbf{sub-microsecond P50 latency} and an Ornstein-Uhlenbeck crude-spread trading engine -- the same from-scratch, no-assumptions rigor applied whether the target is a UI or a matching engine.
+
+\section*{Education}
+\entry{IMT Atlantique -- Engineering Degree in Software Engineering (Apprenticeship)}{Sep 2025 -- Jun 2028}{Nantes, France}{Algorithms \& Data Structures, OS, Computer Networks, Distributed Systems, Cloud Computing, AI}
+\entry{Bachelor in Computer Science}{Sep 2022 -- Jun 2025}{La Rochelle, France}{\textbf{Class rank: 1/85} \textbar{} Software Engineering, Databases, Cybersecurity}
+\noindent\textbf{HRT Macro Placement Challenge 2026} (Hudson River Trading/Partcl) --- \textbf{24th/124} (top 20\%); hybrid analytical placer: force-directed global placement with timing-aware legalization; proxy cost \textbf{1.095} beats SA baseline (2.125) and RePlAce (1.458); field includes Stanford, Princeton, ETH~Z\"urich.
+
+\section*{Work Experience}
+\entry{Excelia Group}{La Rochelle, France}{Software Developer Intern / AI Software Engineer Intern}{Two internships: Jan--Mar 2025 \& May--Jul 2024}
+\begin{itemize}
+  \item Real-time interview simulator (\textbf{Next.js/React, TypeScript}, GPT-4o, ElevenLabs TTS): streaming responses over a scenario-branching state machine, A/B prompt-scoring harness -- production web application, not a prototype.
+  \item RAG pipeline (chunking, OpenAI embeddings, flat FAISS, cross-encoder re-ranking): \textbf{40\% reduction} in lookup time vs.\ keyword-search; cut p95 latency 30--40\% via embedding cache + asyncio parallelisation; Prometheus/Grafana, Docker, GCP.
+\end{itemize}
+\entry{Infotel}{Nantes, France}{AI Engineer Apprentice -- Lab IA}{Sep 2025 -- Jun 2028}
+\begin{itemize}
+  \item Built a Rust-based autonomous software-delivery harness that takes a complete specification through architecture synthesis, epic/slice decomposition, and TDD-first generation to a tested, deployable application end-to-end; automated compile+test quality gates with iterative self-repair; 928 Rust tests.
+\end{itemize}
+
+\section*{Projects}
+
+\projectentry{HFT Limit Order Book Matching Engine}{C++20, cache-aware layout, intrusive data structures}
+\begin{itemize}
+  \item Price-time-priority matching engine (limit/market/cancel) with intrusive doubly-linked price-level lists (\textbf{O(1) cancel} via pointer unlink) and pre-allocated object pooling to keep the hot loop free of \texttt{malloc}/\texttt{new} -- the same instinct to build from first principles rather than assemble from a library, applied to the trading platform's data layer instead of its UI.
+  \item Benchmark suite across three synthetic order-flow regimes: \textbf{2.3M+ msg/s} single-threaded throughput, \textbf{P50 0.6--1.0\,\textmu s} latency, zero hot-path allocations; unit tested.
+\end{itemize}
+
+\projectentry{Crude Oil Spread Trading Engine}{C++20, stochastic processes, order book}
+\begin{itemize}
+  \item Models refining margins (3:2:1 crack spread, generalized N:M:K) and mean-reverting inter-crude spreads via an Ornstein-Uhlenbeck process (Euler-Maruyama) with a rolling z-score signal, matched by a price-time-priority order book.
+  \item OU stationary distribution verified against theory (500K-step sim); crack-spread formula checked to $10^{-9}$; 58 assertions/21 tests, ASan+UBSan clean.
+\end{itemize}
+
+\projectentry{Engineering Docs RAG}{Python, BM25, information retrieval}
+\begin{itemize}
+  \item From-scratch Okapi BM25 retrieval engine (chunking + ranking) for engineering documents; pluggable extractive/LLM generator interface, zero paid API calls in tests/CI/demo by design.
+  \item Hand-derived BM25 scoring verified to 9 significant figures; measured \textbf{precision@1 0.90}, recall@5 1.00, \textbf{MRR 0.944} on a 40-question labeled set; 53 tests, zero runtime dependencies.
+\end{itemize}
+
+\projectentry{ICS Intrusion Detection (IEC 60870-5-104)}{C++20, protocol parsing, explainable rules}
+\begin{itemize}
+  \item Rule-based detector for IEC 60870-5-104 mapped to real attack patterns: control commands to unexpected breaker objects, sequence-number gaps, u-format/command floods.
+  \item Parses APCI+ASDU at \textbf{39.5\,ns} (\textbf{25.3\,M msg/s}); \textbf{100\% recall, 0 false positives} on a labeled synthetic trace; 153 assertions/37 tests, ASan+UBSan clean.
+\end{itemize}
+
+\section*{Technical Skills}
+\noindent
+\begin{tabular}{@{}p{2.7cm}p{15.5cm}@{}}
+\textbf{Frameworks / Web} & TypeScript, React/Next.js, Node.js/Express, REST/gRPC, streaming UI state \\
+\textbf{Languages} & TypeScript, C++20, Rust, Python, SQL \\
+\textbf{Perf / Systems} & cache-aware layout, intrusive linked lists, acquire/release atomics, ICS/SCADA protocol parsing \\
+\textbf{ML / Quant} & BM25/information retrieval, EWMA/CUSUM change-detection, Ornstein-Uhlenbeck, Kalman filter \\
+\textbf{Infrastructure} & Docker, tokio async, Prometheus/Grafana, GitHub Actions CI, GCP, Redis \\
+\end{tabular}
+
+\end{document}
