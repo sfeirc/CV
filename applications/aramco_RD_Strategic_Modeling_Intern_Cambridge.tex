@@ -1,0 +1,95 @@
+\documentclass[10pt]{article}
+\usepackage[top=0.35in,bottom=0.35in,left=0.55in,right=0.55in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{xcolor}
+
+\hypersetup{colorlinks=true, urlcolor=black, linkcolor=black}
+\pagestyle{empty}
+\setlength{\parskip}{0pt}
+\linespread{0.88}
+\renewcommand{\arraystretch}{0.8}
+
+\titleformat{\section}{\large\bfseries}{}{0em}{}[\vspace{-0.6em}\hrulefill]
+\titlespacing*{\section}{0pt}{0.1em}{0.1em}
+
+\titleformat{\subsection}[runin]{\bfseries}{}{0em}{}
+\newcommand{\entry}[4]{%
+  \noindent\textbf{#1} \hfill \textit{#2} \\
+  \textit{#3} \hfill \textit{#4}\\[-0.22em]
+}
+\newcommand{\projectentry}[2]{%
+  \noindent\textbf{#1} \hfill \textit{#2}\\[-0.3em]
+}
+
+\setlist[itemize]{leftmargin=1.1em, itemsep=0pt, topsep=0pt, parsep=0pt, partopsep=0pt}
+
+\begin{document}
+\fontsize{9.3pt}{11pt}\selectfont
+\begin{center}
+  {\LARGE \textbf{Clovis SFEIR}}\\[0.3em]
+  +33\,6\,95\,83\,95\,34 \;$\cdot$\; \href{mailto:clovis.sfeir.cs@gmail.com}{clovis.sfeir.cs@gmail.com} \;$\cdot$\;
+  \href{https://github.com/sfeirc}{github.com/sfeirc} \;$\cdot$\;
+  \href{https://linkedin.com/in/clovis-sfeir-388936240}{linkedin.com/in/clovis-sfeir-388936240} \;$\cdot$\;
+  \href{https://cloooooo.com}{cloooooo.com} \;$\cdot$\; French (Native) -- English (C1)
+\end{center}
+
+\section*{Profile}
+IMT Atlantique engineering student specialising in performance-critical scientific software. Built a finite-difference PDE solver (OpenMP) verified to \textbf{2nd-order convergence} against a closed-form solution, a Peng-Robinson/Monte Carlo CO$_2$ mass-accounting toolkit, an AVX2 pricing engine at \textbf{150.9\,M options/s}, and C++20 systems benchmarked at nanosecond scale with ASan/UBSan-clean test suites.
+
+\section*{Education}
+\entry{IMT Atlantique -- Engineering Degree in Software Engineering (Apprenticeship)}{Sep 2025 -- Jun 2028}{Nantes, France}{Algorithms \& Data Structures, OS, Computer Networks, Distributed Systems, Cloud Computing, AI}
+\entry{Bachelor in Computer Science}{Sep 2022 -- Jun 2025}{La Rochelle, France}{\textbf{Class rank: 1/85} \textbar{} Software Engineering, Databases, Cybersecurity}
+\noindent\textbf{HRT Macro Placement Challenge 2026} (Hudson River Trading/Partcl) --- \textbf{24th/124} (top 20\%); hybrid analytical placer: force-directed global placement with timing-aware legalization; proxy cost \textbf{1.095} beats SA baseline (2.125) and RePlAce (1.458); field includes Stanford, Princeton, ETH~Z\"urich.
+
+\section*{Projects}
+
+\projectentry{Reservoir Diffusivity PDE Solver}{C++20, OpenMP, finite-difference}
+\begin{itemize}
+  \item Explicit FTCS and implicit Crank-Nicolson finite-difference schemes for the reservoir diffusivity (pressure-transient) equation; verified via grid-refinement convergence study against the closed-form erfc analytical solution -- error ratio converges to \textbf{4.0} as $dx$ halves (textbook 2nd-order accuracy) across 5 refinements.
+  \item OpenMP-parallelized stencil/assembly loops; measured (not assumed) scaling identifies the Amdahl's-law-bounded sequential Thomas solve and memory-bandwidth-bound behavior below L3 size; 13 test cases, 40{,}300 assertions; Docker image runs the full suite at build time.
+\end{itemize}
+
+\projectentry{CCUS Injection MRV}{Python, Peng-Robinson EOS, Monte Carlo, CUSUM}
+\begin{itemize}
+  \item CO$_2$ density from a Peng-Robinson equation of state with a volume-shift calibrated on one CoolProp point: error $\leq$1.4\% away from the critical point, $\approx$6\% near it (measured and disclosed); cumulative injected mass with Monte Carlo uncertainty (1{,}000 draws, $\pm$2.1\%).
+  \item CUSUM leak detector on an injectivity model: precision \textbf{0.993}, recall \textbf{0.965}, detection delay 0.83\,h on a labeled synthetic leak; FastAPI service, 53 tests, Docker build verified in CI.
+\end{itemize}
+
+\projectentry{Options Pricing Engine}{C++20, AVX2, Monte Carlo, finite differences}
+\begin{itemize}
+  \item Black-Scholes, Crank-Nicolson finite differences, Sobol quasi-random Monte Carlo and SABR calibration, with AVX2 SIMD kernels and a Google Benchmark suite.
+  \item Measured \textbf{150.9\,M options/s} for AVX2 Black-Scholes (i7-12700K, GCC 12, \texttt{-O3 -march=native}), reproducible from the benchmark suite.
+\end{itemize}
+
+\projectentry{Crude Oil Spread Trading Engine}{C++20, stochastic processes, order book}
+\begin{itemize}
+  \item Models refining margins (3:2:1 crack spread, generalized N:M:K) and mean-reverting inter-crude spreads via an Ornstein-Uhlenbeck process (Euler-Maruyama) with a rolling z-score signal, matched by a price-time-priority order book.
+  \item OU stationary distribution verified against theory (500K-step sim); crack-spread formula checked to $10^{-9}$; order-book submit at \textbf{720\,ns} (non-crossing)/\textbf{1.24\,\textmu s} (crossing); 58 assertions/21 tests, ASan+UBSan clean.
+\end{itemize}
+
+\section*{Work Experience}
+\entry{Infotel}{Nantes, France}{AI Engineer Apprentice -- Lab IA}{Sep 2025 -- Jun 2028}
+\begin{itemize}
+  \item Built a Rust-based autonomous software-delivery harness that takes a complete specification through architecture synthesis (subsystems, interface contracts), epic/slice decomposition, and TDD-first generation to a tested, deployable application end-to-end; automated compile+test quality gates with iterative self-repair, independent code-review pass, and cross-slice conflict detection before delivery; 928 Rust tests; validated end-to-end producing a fully working, 100\%-test-passing application directly from a single specification.
+\end{itemize}
+\entry{Excelia Group}{La Rochelle, France}{Software Developer Intern / AI Software Engineer Intern}{Two internships: Jan--Mar 2025 \& May--Jul 2024}
+\begin{itemize}
+  \item RAG pipeline (chunking, OpenAI embeddings, flat FAISS, cross-encoder re-ranking): \textbf{40\% reduction} in lookup time vs.\ keyword-search; cut p95 latency 30--40\% via embedding cache + asyncio parallelisation; Prometheus/Grafana, Docker, GCP.
+  \item Real-time interview simulator (Next.js/React, GPT-4o, ElevenLabs TTS): streaming responses, scenario-branching state machine, A/B prompt-scoring harness.
+\end{itemize}
+
+\section*{Technical Skills}
+\noindent
+\begin{tabular}{@{}p{2.7cm}p{15.5cm}@{}}
+\textbf{Perf / Systems} & OpenMP, cache-aware layout, acquire/release atomics, ICS/SCADA protocol parsing (Modbus, IEC-104) \\
+\textbf{Languages} & C++20, Python, Rust, TypeScript, SQL \\
+\textbf{Numerics} & finite-difference PDE (FTCS, Crank-Nicolson), Monte Carlo/Sobol, Peng-Robinson EOS, Ornstein-Uhlenbeck, CUSUM, BM25 \\
+\textbf{Infrastructure} & Docker, tokio async, Prometheus/Grafana, GitHub Actions CI, GCP, Redis, ZeroMQ \\
+\textbf{Frameworks} & FastAPI, Flask, Node.js/Express, React/Next.js, REST/gRPC \\
+\end{tabular}
+
+\end{document}
