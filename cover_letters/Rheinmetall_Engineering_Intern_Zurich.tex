@@ -1,0 +1,43 @@
+\documentclass[11pt]{article}
+\usepackage[top=1in,bottom=1in,left=1.1in,right=1.1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{hyperref}
+\usepackage{setspace}
+
+\hypersetup{colorlinks=true, urlcolor=black, linkcolor=black}
+\pagestyle{empty}
+\setstretch{1.08}
+\setlength{\parskip}{0.8em}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+\textbf{\large Clovis SFEIR} \\
+Nantes, France \\
++33\,6\,95\,83\,95\,34 \;$\cdot$\; \href{mailto:clovis.sfeir.cs@gmail.com}{clovis.sfeir.cs@gmail.com} \;$\cdot$\; \href{https://github.com/sfeirc}{github.com/sfeirc}
+
+\vspace{1.2em}
+Rheinmetall Air Defence AG \\
+Internship in Engineering (m/f/d) -- Z\"urich
+
+\vspace{1.2em}
+Dear Rheinmetall Air Defence Hiring Team,
+
+I am applying for the Engineering Internship in your Development department. The posting describes interns who take responsibility for a sub-area and deliver algorithms, prototypes or feasibility studies that can carry into series production. That is how I like to work: build the system, test it, and measure it against a reference before calling it done.
+
+I am an engineering student at IMT Atlantique (Nantes, France) on an apprenticeship track, combining my degree with an AI Engineer role at Infotel's AI Lab. There I built a Rust harness that takes a specification through architecture, decomposition and test-first code generation to a tested application, with automated quality gates and 928 tests. Before that I completed two AI internships at Excelia, where a retrieval pipeline cut lookup time by 40\%.
+
+Several of my personal projects match the areas listed in your posting. For simulation, I wrote a C++20 finite-difference solver (explicit and Crank-Nicolson schemes, parallelised with OpenMP) and verified it against the closed-form solution: the error ratio converges to 4.0 as the grid is halved, the expected second-order behaviour. For sensor analysis, I built an asynchronous Rust pipeline that fuses EWMA and CUSUM change detectors across three channels, which cut false positives to zero across 10 random seeds, up from a baseline precision of only 0.41--0.50. For networked systems, I wrote a C++20 analyser for the IEC 60870-5-104 control protocol that parses a message in 39.5\,ns and detects all attacks on a labelled trace with no false positives. For machine learning, I implemented LoRA fine-tuning from scratch on a hand-written transformer and measured the trade-off against full fine-tuning (3.85\% of the parameters trained, less forgetting, weaker adaptation).
+
+I also placed 24th out of 124 teams in the HRT/Partcl Macro Placement Challenge 2026 with a hybrid analytical placer, which taught me to compare an optimisation method against strong baselines rather than trust it.
+
+I am a French citizen, so I can work in Switzerland under the EU--Switzerland free movement agreement; I would arrange the required permit with your HR team. I am happy to agree on the start date and duration (three to six months) with you.
+
+Thank you for your consideration. I would be glad to walk through any of this work in more depth.
+
+\vspace{1em}
+Best regards, \\
+Clovis Sfeir
+
+\end{document}
