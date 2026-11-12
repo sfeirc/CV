@@ -1,25 +1,26 @@
 \documentclass[10pt,a4paper]{article}
-\usepackage[margin=1.4cm]{geometry}
+\usepackage[margin=1.2cm]{geometry}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage{lmodern}
 \usepackage{enumitem}
 \usepackage{titlesec}
+\usepackage{amsmath}
 \usepackage[hidelinks]{hyperref}
 \usepackage{xcolor}
 \definecolor{accent}{HTML}{174A6E}
 \pagestyle{empty}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0pt}
-\linespread{1.04}
+\linespread{1.0}
 \hyphenpenalty=10000
 \exhyphenpenalty=10000
 \emergencystretch=1em
-\setlist[itemize]{leftmargin=1.1em,itemsep=1.5pt,topsep=2.5pt,parsep=0pt}
+\setlist[itemize]{leftmargin=1.1em,itemsep=1pt,topsep=2pt,parsep=0pt}
 \titleformat{\section}{\large\bfseries\color{accent}}{}{0pt}{}[\vspace{-0.3em}\color{accent}\titlerule]
-\titlespacing*{\section}{0pt}{0.75em}{0.35em}
-\newcommand{\entry}[4]{\textbf{#1} \hfill #2\\\textit{#3} \hfill \textit{#4}\par\vspace{2pt}}
+\titlespacing*{\section}{0pt}{0.6em}{0.3em}
+\newcommand{\entry}[4]{\textbf{#1} \hfill #2\\\textit{#3} \hfill \textit{#4}\par\vspace{1pt}}
 \newcommand{\project}[2]{\textbf{#1} \hfill \textit{#2}\par}
 \begin{document}
 \fontsize{10pt}{12pt}\selectfont
@@ -33,19 +34,19 @@
 \vspace{-6pt}
 
 \section*{Profile}
-IMT Atlantique engineering student and AI apprentice building research-quality systems in machine learning, efficient inference, and agent safety. Implements and benchmarks from scratch—transformers, KV-cache serving engines, ANN indexes, autonomous agent supervisors—running controlled experiments and reporting honest trade-offs. Interested in efficient ML, information retrieval, and reliable LLM agent design.
+IMT Atlantique engineering student and AI apprentice building research-quality systems in machine learning, efficient inference, and agent safety. Implements and benchmarks from scratch---transformers, KV-cache serving engines, ANN indexes, autonomous agent supervisors---running controlled experiments and reporting honest trade-offs. Interested in efficient ML, information retrieval, and reliable LLM agent design.
 
 \section*{Education}
 \entry{IMT Atlantique}{Nantes, France}{Engineering Degree in Computer Science -- Apprenticeship}{Sep 2025 -- Jun 2028}
 Algorithms, data structures, operating systems, distributed systems, cloud computing, artificial intelligence.\par\smallskip
 \entry{University of La Rochelle}{La Rochelle, France}{BSc in Computer Science}{Sep 2022 -- Jun 2025}
-\textbf{Ranked 1st of 85}; software engineering, databases, cybersecurity. Graduated with highest distinction.\par
+\textbf{Ranked 1st of 85}; software engineering, databases, cybersecurity.\par
 
 \section*{Experience}
 \entry{Infotel -- AI Lab}{Nantes, France}{AI Engineer Apprentice}{Sep 2025 -- Jun 2028}
 \begin{itemize}
-\item Building a Rust system that turns natural-language specifications into tested applications through modular architecture synthesis, TDD-first code generation, automated compile/test gates, iterative repair loops, and cross-component conflict resolution; 928 regression tests.
-\item Researching repair strategies that minimise regeneration rounds while maintaining correctness across generated component boundaries.
+\item Building a Rust system that converts natural-language specifications into tested applications via TDD-first code generation, automated compile/test gates, iterative repair, and cross-component conflict resolution; 928 regression tests covering edge cases.
+\item Researching repair strategies that minimise regeneration rounds while preserving correctness across component boundaries.
 \end{itemize}
 \entry{Excelia Group}{La Rochelle, France}{Software Development \& AI Intern}{May--Jul 2024; Jan--Mar 2025}
 \begin{itemize}
@@ -56,15 +57,15 @@ Algorithms, data structures, operating systems, distributed systems, cloud compu
 \section*{Selected Projects}
 \project{LoRA Fine-Tuning Engine}{Python, PyTorch}
 \begin{itemize}
-\item Built a decoder-only transformer (615K params) and LoRA adapters from scratch; ran a controlled 3-way comparison (no-FT / full-FT / LoRA, $r{=}8$, $\alpha{=}16$, \textbf{3.85\% trainable params}). Full fine-tuning achieves the best domain adaptation (finance val loss 0.796) but doubles generic-domain loss (1.42→3.08); LoRA reduces catastrophic forgetting (generic 2.20) at the cost of weaker adaptation (2.33) — result reported honestly, not cherry-picked.
+\item Built a decoder-only transformer (615K params) and LoRA adapters from scratch; ran a controlled 3-way comparison (no-FT / full-FT / LoRA, $r{=}8$, $\alpha{=}16$, \textbf{3.85\% trainable params}). Full fine-tuning achieves the best domain adaptation (finance val loss 0.796) but doubles generic-domain loss (1.42$\to$3.08); LoRA reduces catastrophic forgetting (generic 2.20) at the cost of weaker adaptation (2.33)---result reported honestly, not cherry-picked.
 \end{itemize}
 \project{LLM Inference Server -- ForgeLLM}{Python, Triton, CUDA}
 \begin{itemize}
-\item From-scratch Llama-family serving engine: RoPE, GQA, SwiGLU, RMSNorm, block-based KV cache (paged-VM model), continuous-batching scheduler, fused Triton RMSNorm kernel, C++/CUDA extension, symmetric INT8 weight quantization, OpenAI-compatible streaming API with token-bucket rate limiting; CPU smoke at 8 clients: \textbf{376 tok/s}.
+\item From-scratch Llama serving engine: block-based KV cache (paged-VM model), continuous-batching scheduler, fused Triton/CUDA kernels, INT8 weight quantization, OpenAI-compatible streaming API; CPU smoke at 8 clients: \textbf{376 tok/s}.
 \end{itemize}
 \project{Qwen Autonomous Supervisor}{Python, SQLite, Agent Safety}
 \begin{itemize}
-\item Safety and reliability layer for bounded LLM agent operation: atomic SQLite lease + OS-level scheduler lock for exclusivity; per-tick budgets (wall-time, tool-calls, turns, token/cost ceilings); independent read-only reviewer in a fresh context as quality gate; fingerprint-based quarantine after 3 identical failures; durable campaign system with chaos injection and checkpoint-based resume.
+\item Operational safety layer for LLM agents: atomic SQLite lease for exclusivity; per-tick budgets (wall-time, tool-calls, token ceilings); independent read-only reviewer as quality gate; fingerprint-based quarantine; durable multi-hour campaign system with chaos injection and checkpoint resume.
 \end{itemize}
 \project{HRT/Partcl Macro Placement Challenge 2026}{C++, Combinatorial Optimization}
 \begin{itemize}
