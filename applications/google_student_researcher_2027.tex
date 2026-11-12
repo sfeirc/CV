@@ -33,7 +33,7 @@
 \vspace{-6pt}
 
 \section*{Profile}
-IMT Atlantique engineering student and AI apprentice with hands-on experience spanning machine learning, information retrieval, and algorithmic optimization. Implements systems from scratch—transformers, ANN indexes, PDE solvers, distributed consensus—validates them against measurable benchmarks, and iterates toward research-quality results. Interested in efficient ML inference, retrieval, and intelligent system design.
+IMT Atlantique engineering student and AI apprentice building research-quality systems in machine learning, efficient inference, and agent safety. Implements and benchmarks from scratch—transformers, KV-cache serving engines, ANN indexes, autonomous agent supervisors—running controlled experiments and reporting honest trade-offs. Interested in efficient ML, information retrieval, and reliable LLM agent design.
 
 \section*{Education}
 \entry{IMT Atlantique}{Nantes, France}{Engineering Degree in Computer Science -- Apprenticeship}{Sep 2025 -- Jun 2028}
@@ -54,35 +54,31 @@ Algorithms, data structures, operating systems, distributed systems, cloud compu
 \end{itemize}
 
 \section*{Selected Projects}
-\project{LoRA Fine-Tuning Engine}{Python, Transformer, LoRA}
+\project{LoRA Fine-Tuning Engine}{Python, PyTorch}
 \begin{itemize}
-\item Implemented a full transformer (attention, positional encoding, residual blocks) and LoRA adapters from scratch; ran a controlled three-way comparison (no fine-tuning / full fine-tuning / LoRA), verifying parameter efficiency and faster convergence with $<$1\% of trainable parameters.
+\item Built a decoder-only transformer (615K params) and LoRA adapters from scratch; ran a controlled 3-way comparison (no-FT / full-FT / LoRA, $r{=}8$, $\alpha{=}16$, \textbf{3.85\% trainable params}). Full fine-tuning achieves the best domain adaptation (finance val loss 0.796) but doubles generic-domain loss (1.42→3.08); LoRA reduces catastrophic forgetting (generic 2.20) at the cost of weaker adaptation (2.33) — result reported honestly, not cherry-picked.
+\end{itemize}
+\project{LLM Inference Server -- ForgeLLM}{Python, Triton, CUDA}
+\begin{itemize}
+\item From-scratch Llama-family serving engine: RoPE, GQA, SwiGLU, RMSNorm, block-based KV cache (paged-VM model), continuous-batching scheduler, fused Triton RMSNorm kernel, C++/CUDA extension, symmetric INT8 weight quantization, OpenAI-compatible streaming API with token-bucket rate limiting; CPU smoke at 8 clients: \textbf{376 tok/s}.
+\end{itemize}
+\project{Qwen Autonomous Supervisor}{Python, SQLite, Agent Safety}
+\begin{itemize}
+\item Safety and reliability layer for bounded LLM agent operation: atomic SQLite lease + OS-level scheduler lock for exclusivity; per-tick budgets (wall-time, tool-calls, turns, token/cost ceilings); independent read-only reviewer in a fresh context as quality gate; fingerprint-based quarantine after 3 identical failures; durable campaign system with chaos injection and checkpoint-based resume.
 \end{itemize}
 \project{HRT/Partcl Macro Placement Challenge 2026}{C++, Combinatorial Optimization}
 \begin{itemize}
 \item Placed \textbf{24th/124 (top 20\%)} with a hybrid algorithm combining force-directed global placement and timing-aware legalization; proxy cost \textbf{1.095} vs.\ 2.125 simulated-annealing baseline.
 \end{itemize}
-\project{HNSW Approximate Nearest Neighbour Search}{Rust, Algorithms}
+\project{HNSW Vector Search \& Engineering Document Retrieval}{Rust, Python, IR}
 \begin{itemize}
-\item Built Hierarchical Navigable Small World graphs from scratch with configurable $M$ and $ef_\text{construction}$; benchmarked recall--latency trade-offs against brute-force on synthetic and real embedding sets.
-\end{itemize}
-\project{Renewable Energy Forecast \& LP Dispatch Optimizer}{Python, ML, Operations Research}
-\begin{itemize}
-\item Wind power forecasting pipeline (feature engineering, gradient boosting) paired with a linear-programming economic dispatch solver; validated RMSE and cost metrics against historical dispatch records.
-\end{itemize}
-\project{Vectorized Analytical SQL Engine -- Lamina}{Rust, Systems Research}
-\begin{itemize}
-\item Built a column-store SQL engine with vectorized execution, operator fusion, and TPC-H benchmark suite; measured throughput against reference implementations.
-\end{itemize}
-\project{Engineering Document Retrieval}{Python, Information Retrieval}
-\begin{itemize}
-\item Implemented BM25 from scratch over a technical document corpus; on 40 labeled queries: \textbf{0.90 precision@1}, 1.00 recall@5, \textbf{0.944 MRR}.
+\item HNSW graphs from scratch (configurable $M$, $ef_\text{construction}$); benchmarked recall--latency trade-offs against brute-force. BM25 retrieval engine from scratch: on 40 labeled queries, \textbf{0.90 precision@1}, 1.00 recall@5, \textbf{0.944 MRR}.
 \end{itemize}
 
 \section*{Technical Skills}
 \textbf{Programming:} Python, C/C++20, Rust, MATLAB, Haskell, Ada, Bash, TypeScript, SQL\\
-\textbf{ML \& Research:} Transformers, LoRA, RAG, BM25, FAISS, HNSW, EWMA/CUSUM, LightGBM/XGBoost/CatBoost, Kalman filtering\\
-\textbf{Systems \& Numerical:} OpenMP, tokio, finite-difference methods (FTCS/Crank--Nicolson), profiling, benchmarking\\
+\textbf{ML \& Research:} Transformers, LoRA, KV-cache serving, continuous batching, RAG, BM25, FAISS, HNSW, LightGBM/XGBoost, Kalman, EWMA/CUSUM\\
+\textbf{Systems:} Triton/CUDA kernels, INT8 quantization, OpenMP, tokio, profiling, benchmarking, numerical methods\\
 \textbf{Tools:} Docker, GCP, Prometheus, Grafana, GitHub Actions, \LaTeX\\
 \textbf{Languages:} French (native), English (C1)
 \end{document}
