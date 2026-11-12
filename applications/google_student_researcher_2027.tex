@@ -1,0 +1,88 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[margin=1.4cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{lmodern}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage[hidelinks]{hyperref}
+\usepackage{xcolor}
+\definecolor{accent}{HTML}{174A6E}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\linespread{1.04}
+\hyphenpenalty=10000
+\exhyphenpenalty=10000
+\emergencystretch=1em
+\setlist[itemize]{leftmargin=1.1em,itemsep=1.5pt,topsep=2.5pt,parsep=0pt}
+\titleformat{\section}{\large\bfseries\color{accent}}{}{0pt}{}[\vspace{-0.3em}\color{accent}\titlerule]
+\titlespacing*{\section}{0pt}{0.75em}{0.35em}
+\newcommand{\entry}[4]{\textbf{#1} \hfill #2\\\textit{#3} \hfill \textit{#4}\par\vspace{2pt}}
+\newcommand{\project}[2]{\textbf{#1} \hfill \textit{#2}\par}
+\begin{document}
+\fontsize{10pt}{12pt}\selectfont
+\begin{center}
+{\Large\bfseries Clovis SFEIR}\\[2pt]
++33 6 95 83 95 34 \; $\cdot$ \;
+\href{mailto:clovis.sfeir.cs@gmail.com}{clovis.sfeir.cs@gmail.com} \; $\cdot$ \;
+\href{https://github.com/sfeirc}{github.com/sfeirc} \; $\cdot$ \;
+\href{https://linkedin.com/in/clovis-sfeir-388936240}{LinkedIn} \; $\cdot$ \; Nantes, France
+\end{center}
+\vspace{-6pt}
+
+\section*{Profile}
+IMT Atlantique engineering student and AI apprentice with hands-on experience spanning machine learning, information retrieval, and algorithmic optimization. Implements systems from scratch—transformers, ANN indexes, PDE solvers, distributed consensus—validates them against measurable benchmarks, and iterates toward research-quality results. Interested in efficient ML inference, retrieval, and intelligent system design.
+
+\section*{Education}
+\entry{IMT Atlantique}{Nantes, France}{Engineering Degree in Computer Science -- Apprenticeship}{Sep 2025 -- Jun 2028}
+Algorithms, data structures, operating systems, distributed systems, cloud computing, artificial intelligence.\par\smallskip
+\entry{University of La Rochelle}{La Rochelle, France}{BSc in Computer Science}{Sep 2022 -- Jun 2025}
+\textbf{Ranked 1st of 85}; software engineering, databases, cybersecurity. Graduated with highest distinction.\par
+
+\section*{Experience}
+\entry{Infotel -- AI Lab}{Nantes, France}{AI Engineer Apprentice}{Sep 2025 -- Jun 2028}
+\begin{itemize}
+\item Building a Rust system that turns natural-language specifications into tested applications through modular architecture synthesis, TDD-first code generation, automated compile/test gates, iterative repair loops, and cross-component conflict resolution; 928 regression tests.
+\item Researching repair strategies that minimise regeneration rounds while maintaining correctness across generated component boundaries.
+\end{itemize}
+\entry{Excelia Group}{La Rochelle, France}{Software Development \& AI Intern}{May--Jul 2024; Jan--Mar 2025}
+\begin{itemize}
+\item Built a production RAG pipeline (embeddings, FAISS, BM25, cross-encoder reranking): 40\% faster lookup, 30--40\% lower p95 latency; deployed on GCP/Docker and monitored with Prometheus/Grafana.
+\item Developed a streaming GPT-4o interview simulator with Next.js and speech synthesis; adaptive scenario branching from live model responses.
+\end{itemize}
+
+\section*{Selected Projects}
+\project{LoRA Fine-Tuning Engine}{Python, Transformer, LoRA}
+\begin{itemize}
+\item Implemented a full transformer (attention, positional encoding, residual blocks) and LoRA adapters from scratch; ran a controlled three-way comparison (no fine-tuning / full fine-tuning / LoRA), verifying parameter efficiency and faster convergence with $<$1\% of trainable parameters.
+\end{itemize}
+\project{HRT/Partcl Macro Placement Challenge 2026}{C++, Combinatorial Optimization}
+\begin{itemize}
+\item Placed \textbf{24th/124 (top 20\%)} with a hybrid algorithm combining force-directed global placement and timing-aware legalization; proxy cost \textbf{1.095} vs.\ 2.125 simulated-annealing baseline.
+\end{itemize}
+\project{HNSW Approximate Nearest Neighbour Search}{Rust, Algorithms}
+\begin{itemize}
+\item Built Hierarchical Navigable Small World graphs from scratch with configurable $M$ and $ef_\text{construction}$; benchmarked recall--latency trade-offs against brute-force on synthetic and real embedding sets.
+\end{itemize}
+\project{Renewable Energy Forecast \& LP Dispatch Optimizer}{Python, ML, Operations Research}
+\begin{itemize}
+\item Wind power forecasting pipeline (feature engineering, gradient boosting) paired with a linear-programming economic dispatch solver; validated RMSE and cost metrics against historical dispatch records.
+\end{itemize}
+\project{Vectorized Analytical SQL Engine -- Lamina}{Rust, Systems Research}
+\begin{itemize}
+\item Built a column-store SQL engine with vectorized execution, operator fusion, and TPC-H benchmark suite; measured throughput against reference implementations.
+\end{itemize}
+\project{Engineering Document Retrieval}{Python, Information Retrieval}
+\begin{itemize}
+\item Implemented BM25 from scratch over a technical document corpus; on 40 labeled queries: \textbf{0.90 precision@1}, 1.00 recall@5, \textbf{0.944 MRR}.
+\end{itemize}
+
+\section*{Technical Skills}
+\textbf{Programming:} Python, C/C++20, Rust, MATLAB, Haskell, Ada, Bash, TypeScript, SQL\\
+\textbf{ML \& Research:} Transformers, LoRA, RAG, BM25, FAISS, HNSW, EWMA/CUSUM, LightGBM/XGBoost/CatBoost, Kalman filtering\\
+\textbf{Systems \& Numerical:} OpenMP, tokio, finite-difference methods (FTCS/Crank--Nicolson), profiling, benchmarking\\
+\textbf{Tools:} Docker, GCP, Prometheus, Grafana, GitHub Actions, \LaTeX\\
+\textbf{Languages:} French (native), English (C1)
+\end{document}
